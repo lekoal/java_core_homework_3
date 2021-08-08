@@ -7,12 +7,23 @@ public class Main {
     public static Scanner sc = new Scanner(System.in); // Создание объекта Scanner для ввода значений в консоль
 
     public static void main(String[] args) {
+// 1. Написать программу, которая загадывает случайное число от 0 до 9 и пользователю дается 3 попытки угадать это число
         int bord = 10; // Диапазон загадываемых значений (от 0 до 9)
         int tryCount = 3; // Количество попыток
         String msg = "Угадайте случайное число от 0 до 9";
-        tryGuess(msg, bord, tryCount); // Вызов метода с передачей ему аргументов
+    tryGuess(msg, bord, tryCount); // Вызов метода первой задачи с передачей ему аргументов.
+
+// 2. Создать массив из слов. При запуске программы компьютер загадывает слово, запрашивает ответ у пользователя, сравнивает его с загаданным словом и сообщает, правильно ли ответил пользователь
+        String msg2 = "Попробуйте угадать слово";
+        String[] stringArr = {"apple", "orange", "lemon", "banana", "apricot", "avocado", "broccoli", "carrot", "cherry", "garlic", "grape", "melon", "leak", "kiwi", "mango", "mushroom", "nut", "olive", "pea", "peanut", "pear", "pepper", "pineapple", "pumpkin", "potato"};
+        Random rand = new Random(); // Создание объекта Random для генерирования случайных чисел
+        int randArrVal = rand.nextInt(stringArr.length - 1); // Создание переменной со случайным числом в диапазоне размеров массива
+        String askWord = stringArr[randArrVal]; // Получение случайной строки из массива
+        int wordLength = askWord.length(); // Возвращаем длину строки
+//  arrWork(msg2, askWord, wordLength); // Вызов метода второй задачи. Для вызова метода закомментировать строку с вызовом tryGuess
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }
-// 1. Написать программу, которая загадывает случайное число от 0 до 9 и пользователю дается 3 попытки угадать это число
+
     public static void tryGuess (String msg, int border, int tryCount) { // Создание метода сравнения введённых и загаданных чисел
         int userNumber;
         int userAnswer;
@@ -53,4 +64,33 @@ public class Main {
                 break; // Выход из игры
         }
     }
+
+    public static void arrWork(String msg2, String askWord, int wordLength) {
+        System.out.println(msg2); // Вывод сообщения о начале игры
+        String userString; // Создание переменной для хранения пользовательской строки
+        int k = 0; // Счётчик угаданных символов. Требуется для заполнения 15 символов знаком решётки
+        userString = sc.next().toLowerCase(); // Запись в переменную пользовательской строки с преобразованием регистра символов
+        int userWordLength = userString.length(); // Получения длины введённой строки
+        if (askWord.equals(userString)) { // Условие со сравнением строк
+            System.out.println("Вы угадали!"); // Вывод сообщения о совпадении строк
+            System.out.println("Завершение игры");
+            sc.close(); // Закрытие сканера
+        } else {
+            System.out.println("Неверно!"); // Вывод сообщения о неправильном вводе
+            for (int i = 0; i < wordLength && i < userWordLength; i++) { // Цикл посимвольного сравнения строк
+                if (askWord.charAt(i) == userString.charAt(i)) {
+                    System.out.print(askWord.charAt(i)); // Вывод совпадающих букв
+                } else {
+                        System.out.print("#"); // При несовпадении букв вывести символ решётки
+                }
+                k++; // Счётчик символов увеличивается на единицу за каждый проход цикла
+            }
+            for (int j = 0; j < 15 - k; j++){ // Цикл заполнения символами решётки до 15 символов
+                System.out.print("#");
+            }
+            System.out.println(); // Перевод строки
+            arrWork(msg2, askWord, wordLength); // Использование рекурсии
+        }
+    }
+
 }
