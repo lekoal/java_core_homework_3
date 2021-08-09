@@ -7,9 +7,18 @@ public class Main {
     public static Scanner sc = new Scanner(System.in); // Создание объекта Scanner для ввода значений в консоль
 
     public static void main(String[] args) {
-        taskFirst(); // Запуск первого задания
-    //    taskSecond(); // Запуск второго задания
-
+        System.out.println("Выберите игру: 1 - Угадай число; 2 - Угадай слово");
+        int gameVar = sc.nextInt();
+        switch (gameVar) {
+            case 1: taskFirst(); // Запуск первого задания
+                break;
+            case 2: taskSecond(); // Запуск второго задания
+                break;
+            default: System.out.println("Введено некорректное число!");
+                System.out.println("Приложение закрывается");
+            break;
+        }
+        sc.close(); // Закрытие сканера
     }
     public static void taskFirst() {
         // 1. Написать программу, которая загадывает случайное число от 0 до 9 и пользователю дается 3 попытки угадать это число
@@ -60,12 +69,10 @@ public class Main {
             case 1: tryGuess(msg, border, tryCount); // Если введена 1, вызываем рекурсию
                 break;
             case 0: System.out.println("Завершение игры"); // Если введён 0, выводим сообщение
-                sc.close(); // Закрытие сканера
                 break; // Выход из игры
             default:
                 System.out.println("Некорректный ввод");
                 System.out.println("Завершение игры");
-                sc.close(); // Закрытие сканера
                 break; // Выход из игры
         }
     }
@@ -79,7 +86,6 @@ public class Main {
         if (askWord.equals(userString)) { // Условие со сравнением строк
             System.out.println("Вы угадали!"); // Вывод сообщения о совпадении строк
             System.out.println("Завершение игры");
-            sc.close(); // Закрытие сканера
         } else {
             System.out.println("Неверно!"); // Вывод сообщения о неправильном вводе
             for (int i = 0; i < wordLength && i < userWordLength; i++) { // Цикл посимвольного сравнения строк
