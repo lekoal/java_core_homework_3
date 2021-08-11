@@ -8,7 +8,9 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Выберите игру: 1 - Угадай число; 2 - Угадай слово");
-        int gameVar = sc.nextInt();
+        int gameVar;
+        if (sc.hasNextInt()) {
+        gameVar = sc.nextInt();
         switch (gameVar) {
             case 1: taskFirst(); // Запуск первого задания
                 break;
@@ -17,6 +19,10 @@ public class Main {
             default: System.out.println("Введено некорректное число!");
                 System.out.println("Приложение закрывается");
             break;
+        }
+        } else {
+        	System.out.println("Это не число!");
+        	System.out.println("Завершение игры");
         }
         sc.close(); // Закрытие сканера
     }
@@ -39,18 +45,24 @@ public class Main {
     }
 
     public static void tryGuess (String msg, int border, int tryCount) { // Создание метода сравнения введённых и загаданных чисел
-        int userNumber;
+        int userNumber = 0;
         int userAnswer;
         Random rand = new Random(); // Создание объекта Random для генерирования случайных чисел
         int randVal = rand.nextInt(border); // Создание переменной со случайным числом в указанном диапазоне
         System.out.println(msg); // Вывод сообщения о вводе
         for (int i = tryCount; i > 0; i--) { // Цикл сравнения значений, повторяется заданное число раз
             do {
+                if (sc.hasNextInt()) {
                 userNumber = sc.nextInt(); // Создание переменной, хранящей в себе введённое значение
                 if (userNumber < 0 || userNumber > border) { // Проверка введённого значения на корректность ввода
                     System.out.println("Введённое значение вне указанного диапазона");
                 }
-            } while (userNumber < 0 || userNumber > border); // Цикл будет повторяться до тех пор, пока не будет введено корректное значение
+            } else {
+        	System.out.println("Это не число!");
+        	System.out.println("Завершение игры");
+        	return;
+        }
+      } while (userNumber < 0 || userNumber > border); // Цикл будет повторяться до тех пор, пока не будет введено корректное значение
 
             if (userNumber < randVal) { // Если введённое значение меньше случайно сгенерированного
                System.out.println("Загаданное число больше"); // Вывод оповещения
@@ -64,6 +76,7 @@ public class Main {
            }
         }
         System.out.println("Повторить игру еще раз? 1 – да / 0 – нет"); // Вывод предложения о продолжении игры
+        if (sc.hasNextInt()) {
         userAnswer = sc.nextInt(); // Считывание введённого значения
         switch (userAnswer) { // Условие по значению переменной userAnswer
             case 1: tryGuess(msg, border, tryCount); // Если введена 1, вызываем рекурсию
@@ -75,6 +88,11 @@ public class Main {
                 System.out.println("Завершение игры");
                 break; // Выход из игры
         }
+    } else {
+    	System.out.println("Это не число!");
+        System.out.println("Завершение игры");
+        return;
+    }
     }
 
     public static void arrWork(String msg2, String askWord, int wordLength) {
